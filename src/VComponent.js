@@ -1,6 +1,6 @@
 import React from "react";
 
-const Menu = () => {
+const VComponent = (props) => {
     return(
         <div>
         <h1>Hello from Arrow Component </h1>
@@ -8,4 +8,4 @@ const Menu = () => {
     )
 }
 
-export default Menu;
+export default VComponent;
