@@ -1,31 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import HeaderComponent from './Header/HeaderComponents';
 import dataTypes from "./Header/type.json";
-import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { google_api_key } from "./keys";
-
-const containerStyle = {
-  width: '700px',
-  height: '600px'
-};
-
-const center = {
-  lat: 51.169392,
-  lng: 71.449074
-};
+import MapComponent from './Body/MapComponent';
 
 function App() {
 
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: google_api_key,
-  })
+  const [form, setForm] = useState(null);
 
   function handleSubmit(event) {
-
     event.preventDefault();
     const city = event.target.city.value;
     const unit = event.target.unit.value;
@@ -37,16 +22,16 @@ function App() {
       }
     }
 
-    let exclude = dataTypes.filter(dtype => !selectedTypes.includes(dtype.value));
-
-
-    console.log(exclude);
+    let excludeDataType = dataTypes.filter(dtype => !selectedTypes.includes(dtype.value));
 
     const language = event.target.language.value;
 
-    console.log(city);
-    console.log(unit);
-    console.log(language);
+    setForm({
+      city,
+      unit,
+      language,
+      excludeDataType
+    });
   }
 
   return (
@@ -57,18 +42,7 @@ function App() {
       </Row>
       <Row>
         <Col>
-          {isLoaded ? (
-            <GoogleMap
-              mapContainerStyle={containerStyle}
-              center={center}
-              zoom={7}
-  
-            >
-              { /* Child components, such as markers, info windows, etc. */}
-              <></>
-            </GoogleMap>
-          ) : <></>
-          }
+          < MapComponent form={form}/>
         </Col>
       </Row>
     </Container>
