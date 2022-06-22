@@ -8,35 +8,21 @@ import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { google_api_key } from "./keys";
 
 const containerStyle = {
-  width: '400px',
-  height: '400px'
+  width: '700px',
+  height: '600px'
 };
 
 const center = {
-  lat: 43.238949,
-  lng: -76.889709
+  lat: 51.169392,
+  lng: 71.449074
 };
 
 function App() {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: google_api_key
+    googleMapsApiKey: google_api_key,
   })
-
-  const [map, setMap] = React.useState(null)
-
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(center);
-    map.fitBounds(bounds);
-    setMap(map)
-  }, [])
-
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null)
-  }, [])
-
-
 
   function handleSubmit(event) {
 
@@ -76,8 +62,7 @@ function App() {
               mapContainerStyle={containerStyle}
               center={center}
               zoom={7}
-              onLoad={onLoad}
-              onUnmount={onUnmount}
+  
             >
               { /* Child components, such as markers, info windows, etc. */}
               <></>
