@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, { useRef, useEffect } from "react";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import cities from "../Header/cities.json";
 import dataTypes from "./type.json";
@@ -6,30 +6,39 @@ import 'dotenv/config';
 
 export default function FormComponent(props) {
 
-const formElement = useRef(null);
+	const formElement = useRef(null);
 
-function handleInput () {
-	console.log(formElement);
+  useEffect(()=> {
+    if(props.form === null) {
+    	props.setForm({
+			city: props.selectedCity,
+			unit: props.unit,
+			language: props.language
+		});
+  }});
 
-	formElement.current.dispatchEvent(
-		new Event('submit', { cancelable: true, bubbles: true})
-	)
-}
+	function handleInput() {
+		console.log(formElement);
+
+		formElement.current.dispatchEvent(
+			new Event('submit', { cancelable: true, bubbles: true })
+		)
+	}
 
 	return (
 		<Container>
 			<Form ref={formElement} onInput={handleInput} onSubmit={props.handleForm}>
 				<Row>
-					<Col>       
-					<Form.Group className="mb-3" controlId="city">
-						<Form.Label>Choose city</Form.Label>
-						<Form.Select defaultValue={props.selectedCity} name="city" aria-label="Default select example">
-							<option>Open this select menu</option>
-							{cities.map((city, i) =>
-								<option value={i} key={city.name}>{city.name}</option>
-							)}
-						</Form.Select>
-					</Form.Group>
+					<Col>
+						<Form.Group className="mb-3" controlId="city">
+							<Form.Label>Choose city</Form.Label>
+							<Form.Select defaultValue={props.selectedCity} name="city" aria-label="Default select example">
+								<option>Open this select menu</option>
+								{cities.map((city, i) =>
+									<option value={i} key={city.name}>{city.name}</option>
+								)}
+							</Form.Select>
+						</Form.Group>
 					</Col>
 					<Col>  <Form.Group className="mb-3" controlId="language">
 						<Form.Label>Choose language</Form.Label>
@@ -72,7 +81,7 @@ function handleInput () {
 						)}
 					</Form.Group></Col>
 				</Row>
-				</Form>
+			</Form>
 		</Container>
 	)
 }

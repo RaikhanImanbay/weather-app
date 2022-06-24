@@ -8,24 +8,20 @@ const containerStyle = {
     height: '400px'
 };
 
-const center = {
-    lat: 51.169392,
-    lng: 71.449074
-};
-
 export default function MapComponent(props) {
-    console.log(props.form);
+
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: google_api_key,
-    })
+    });
+
     return (
         <Container className='mt-4'>
             {isLoaded ? (
                 <GoogleMap
                     mapContainerStyle={containerStyle}
-                    center={center}
-                    zoom={7}
+                    center={cities[(props.cookie || {}).city || props.form.city]}
+                    zoom={10}
                 >
                     { /* Child components, such as markers, info windows, etc. */}
                     <></>
