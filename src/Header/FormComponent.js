@@ -56,25 +56,28 @@ export default function FormComponent(props) {
               <Form.Label>Choose Data type</Form.Label>
               {dataTypes.map(dtype => {
                 let isDataChecked = props.dataType.value === dtype.value;
-                if((props.cookie || {}).excludeDataType) {
-                  let isExcluded = props.cookie.excludeDataType.find(type
-
-
-                  )
-
+                if ((props.cookie || {}).excludeDataType) {
+                  let isExcluded = props.cookie.excludeDataType.find(type =>
+                    type.value === dtype.value);
+                    if(isExcluded) {
+                      isDataChecked = false;
+                    } else {
+                      isDataChecked = true;
+                    }
                 }
 
-                return(
+                return (
                   <Form.Check
-                  key={dtype.value}
-                  id={dtype.value}
-                  type="checkbox"
-                  name="dataType"
-                  defaultChecked={isDataChecked}
-                  label={dtype.label}
-                  value={dtype.value}
-                />
-                )}
+                    key={dtype.value}
+                    id={dtype.value}
+                    type="checkbox"
+                    name="dataType"
+                    defaultChecked={isDataChecked}
+                    label={dtype.label}
+                    value={dtype.value}
+                  />
+                )
+              }
               )}
             </Form.Group></Col>
           <Col>
@@ -82,7 +85,7 @@ export default function FormComponent(props) {
               <Form.Label>Choose unit</Form.Label>
               {['standard', 'metric', 'imperial'].map(unit => {
                 let isUnitChecked = props.unit === unit;
-                if((props.cookie || {}).unit) {
+                if ((props.cookie || {}).unit) {
                   isUnitChecked = props.cookie.unit === unit;
                 }
                 return (<Form.Check

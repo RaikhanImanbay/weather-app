@@ -7,10 +7,10 @@ import dataTypes from "./Header/type.json";
 import MapComponent from './Body/MapComponent';
 import { useCookies } from 'react-cookie';
 
-function App() {
+function App() { // main component which is rendered in <div>
 
   const [form, setForm] = useState(null);
-  const [cookies, setCookie, removeCookie] = useCookies(['weather']);
+  const [cookies, setCookie] = useCookies(['weather']);
   console.log(cookies.weather);
 
   function handleSubmit(event) {
