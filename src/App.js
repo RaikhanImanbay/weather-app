@@ -12,7 +12,7 @@ function App() {
   const [form, setForm] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies(['weather']);
   console.log(cookies.weather);
-  
+
   function handleSubmit(event) {
     event.preventDefault();
     const city = event.target.city.value;
@@ -46,6 +46,7 @@ function App() {
             handleForm={handleSubmit}
             setForm={setForm}
             form={form}
+            cookie={cookies.weather}
           />
         </Col>
       </Row>
